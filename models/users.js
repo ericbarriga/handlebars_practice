@@ -1,5 +1,6 @@
 const { Model, DataTypes, UUIDV4 } = require('sequelize');
 const sequelize = require('../config');
+
 class User extends Model { }
 User.init(
     {
@@ -32,7 +33,7 @@ User.init(
         sequelize,
         timestamps: false,
         freezeTableName: true,
-        modelName: 'user',
+        modelName: 'users',
     }
 );
 module.exports = User;
