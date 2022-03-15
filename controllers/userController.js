@@ -1,13 +1,11 @@
 const {
     User
-} = require('../models')
-
+} = require('../models');
 module.exports = {
-
     createUser: async (req, res) => {
         const { username, email, password } = req.body;
         if (!username || !email || !password) {
-            return res.status(400).json({ error: 'need username and password' });
+            return res.status(400).json({ error: 'You must provide a username, email, and password' });
         }
         try {
             const user = await User.create({
@@ -16,13 +14,22 @@ module.exports = {
                 password,
             });
             res.json(user);
-        } catch (error) {
-            res.json(error)
+        } catch (e) {
+            res.json(e);
         }
     },
 
     // getting all users ;
     getAllUsers: async (req, res) => {
+        //to see if a user has viewed our page ; 
+        req.session.save(() => {
+            if (req.session.visitCount) {
+                req.session.visitCount++;
+            } else {
+                req.session.visitCount = 1;
+            }
+        })
+
         try {
             const usersData = await User.findAll({});
 
@@ -31,6 +38,7 @@ module.exports = {
             res.render('allUsers', {
                 users,
                 favoriteFood: 'ice cream',
+                visitCount: req.session.visitCount,
 
             })
         } catch (e) {
