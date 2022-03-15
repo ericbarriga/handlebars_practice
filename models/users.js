@@ -1,10 +1,6 @@
-const { model, DataTypes, UUIDV4 } = require('sequelize')
-
-const sequelize = require('../config')
-
+const { Model, DataTypes, UUIDV4 } = require('sequelize');
+const sequelize = require('../config');
 class User extends Model { }
-
-
 User.init(
     {
         id: {
@@ -34,10 +30,9 @@ User.init(
     },
     {
         sequelize,
-        timestamp: false,
+        timestamps: false,
         freezeTableName: true,
-        modelName: 'user'
-    },
-)
-
+        modelName: 'user',
+    }
+);
 module.exports = User;
